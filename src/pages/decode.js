@@ -33,31 +33,35 @@ const VerticalStepper = () => {
 
   const handleInputChange = (name, value) => {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+
+
+  };
+
+  const [password, setPassword] = useState("");
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Here you can send formData to the server using fetch or any other method
-    console.log("Form Data:", formData);
+    console.log("Password:", password);
+    // Add your logic here, such as sending the password to the server
   };
+
+ 
 
   const getStepContent = (step) => {
     switch (step) {
+      
+
       case 0:
         return (
-          <Box className="step0-text-area">
-            <TextField
-              label="Enter Text"
-              multiline
-              rows={4}
-              fullWidth
-              variant="outlined"
-              value={formData.text}
-              onChange={(e) => handleInputChange("text", e.target.value)}
+          <Box className="step1-file-upload">
+            <FileUploadComponent
+              onFileChange={(file) => handleInputChange("file", file)}
             />
-
-            <Box className="step0-button">
+            <Box className="step1-button">
               <Button
                 variant="contained"
                 onClick={handleNext}
@@ -69,13 +73,20 @@ const VerticalStepper = () => {
           </Box>
         );
 
-      case 1:
+        case 1:
         return (
-          <Box className="step1-file-upload">
-            <FileUploadComponent
-              onFileChange={(file) => handleInputChange("file", file)}
+          <Box className="step0-text-area">
+            <TextField
+              label="Enter Text"
+              multiline
+              rows={3}
+              fullWidth
+              variant="outlined"
+              value={formData.text}
+              onChange={(e) => handleInputChange("text", e.target.value)}
             />
-            <Box className="step1-button">
+
+            <Box className="step0-button">
               <Button
                 variant="contained"
                 onClick={handleNext}
@@ -104,8 +115,27 @@ const VerticalStepper = () => {
             </Box>
           </Box>
         );
+          case 3:
+            return (
+              <Box className="step3-password">
+                <TextField
+                  label="Enter Password"
+                  type="password"
+                  fullWidth
+                  variant="outlined"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+                <Button variant="contained" onClick={handleBack}>
+                  Back
+                </Button>
+                <Button variant="contained" onClick={handleSubmit}>
+                  Next
+                </Button>
+              </Box>
+            );
 
-      case 3:
+      case 4:
         return (
           <Box>
             <DownloadComponent />
@@ -120,17 +150,17 @@ const VerticalStepper = () => {
     }
   };
 
-  const steps = ["Text Area", "Choose Files", "Algorithm", "Download Files"];
+  const steps = [ "Choose Files", "Text Area","Algorithm","Password", "Download Files"];
 
   return (
     <form onSubmit={handleSubmit}>
       <Box className="vertical-stepper-container">
-        <Typography variant="h4" className="stepper-title">
-          Pixel Secrets
+        <Typography variant="h6" className="stepper-title">
+         Decode your message
         </Typography>
-        <Typography variant="body2" className="stepper-subtitle">
+        {/* <Typography variant="body2" className="stepper-subtitle">
           Simple, fast, secure client-side file encryption
-        </Typography>
+        </Typography> */}
         <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((label, index) => (
             <Step key={label}>

@@ -1,7 +1,7 @@
 // components/Navbar/index.js
 
-import React from "react";
-import logo from "../../assets/PixelLOGO.png";
+import React, { useState } from "react";
+import logo from "../../assets/transparentlogo.png";
 import {
   Nav,
   NavLink,
@@ -10,27 +10,24 @@ import {
   NavBtn,
   NavBtnLink,
 } from "./navbarElements";
+import "./navbar.css"; // Import the CSS file
 
 const Navbar = () => {
-  const imageStyle = {
-    width: "160px", // Set the width
-    height: "40px", // Maintain aspect ratio
+  const [menuActive, setMenuActive] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuActive(!menuActive);
   };
+
   return (
     <>
-      <Nav>
-        <Bars />
-        {/* <NavBtn>
-          <NavBtnLink to="/signin">Sign In</NavBtnLink>
-        </NavBtn> */}
-        <img src={logo} alt="pixelsecrets" style={imageStyle} />
-        <NavMenu>
-          <NavLink to="/encode">Encode</NavLink>
-          <NavLink to="/decode">Decode</NavLink>
-          <NavLink to="/about">About</NavLink>
-
-          {/* Second Nav */}
-          {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
+      <Nav className="navbar">
+        <Bars className="bars" onClick={toggleMenu} />
+        <img src={logo} alt="pixelsecrets" className="logo" />
+        <NavMenu className={`nav-menu ${menuActive ? "active" : ""}`}>
+          <NavLink to="/encode" className="nav-link">Encode</NavLink>
+          <NavLink to="/decode" className="nav-link">Decode</NavLink>
+          <NavLink to="/about" className="nav-link">About</NavLink>
         </NavMenu>
       </Nav>
     </>
