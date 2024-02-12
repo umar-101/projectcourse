@@ -6,18 +6,25 @@ import './about.css'
 const About = () => {
   return (
     <div className="container">
-      <h1 className="heading">Main Heading</h1>
+      <h1 className="heading">Introduction</h1>
       <hr className="divider" />
-      <h2 className="subheading">Sub Heading</h2>
       <p className="paragraph">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+      Hat.sh is a free opensource web app that provides secure file encryption in the browser.
       </p>
+      <h1 className="heading">Features</h1>
+      <hr className="divider" />
+      <h2 className="subheading">Functionalites</h2>
+      <ul>
+       <li>Secure encryption/decryption of files with passwords or keys.</li> 
+       <li>Secure random password generation.</li> 
+       <li>Asymmetric key pair generation.</li> 
+       <li>Authenticated key exchange.</li> 
+        <li>Password strength estimation</li>
+
+
+
+
+      </ul>
     </div>
   );
 };

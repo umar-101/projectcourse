@@ -73,30 +73,7 @@ const VerticalStepper = () => {
           </Box>
         );
 
-        case 1:
-        return (
-          <Box className="step0-text-area">
-            <TextField
-              label="Enter Text"
-              multiline
-              rows={3}
-              fullWidth
-              variant="outlined"
-              value={formData.text}
-              onChange={(e) => handleInputChange("text", e.target.value)}
-            />
-
-            <Box className="step0-button">
-              <Button
-                variant="contained"
-                onClick={handleNext}
-                disabled={activeStep === steps.length - 1}
-              >
-                Next
-              </Button>
-            </Box>
-          </Box>
-        );
+        
 
       case 1:
         return (
