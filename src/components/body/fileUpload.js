@@ -26,7 +26,7 @@ const FileUploadComponent = () => {
         </Box>
         <Box>
           {/* Typography Text */}
-          <Typography variant="subtitle1" sx={{ marginTop: "8px" }}>
+          <Typography variant="subtitle1" sx={{ marginTop: "8px" ,color:'grey'}}>
             Drag & drop your file here
           </Typography>
         </Box>

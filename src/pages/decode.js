@@ -98,7 +98,7 @@ const VerticalStepper = () => {
           </Box>
         );
 
-      case 2:
+      case 1:
         return (
           <Box className="step2-dropdown">
             <DropdownTextField
@@ -115,42 +115,72 @@ const VerticalStepper = () => {
             </Box>
           </Box>
         );
+        case 2:
+          return (
+            <Box className="step3-password step0-text-area">
+              <TextField
+                label="Enter Password"
+                type="password"
+                fullWidth
+                variant="outlined"
+                value={password}
+                onChange={handlePasswordChange}
+                InputProps={{ style: { color: 'white' } }} 
+                 InputLabelProps={{
+              
+              style: { color: 'grey', fontSize: 14 } // Changing label color
+              }}
+                
+              />
+               <Box className="step2-button">
+              <Button
+              variant="contained"
+              onClick={handleNext}
+              disabled={activeStep === steps.length -1}
+              >
+              Next
+            </Button>
+             </Box>
+            </Box>
+          );
+
           case 3:
             return (
-              <Box className="step3-password">
+              <Box className="step0-text-area">
                 <TextField
-                  label="Enter Password"
-                  type="password"
+                  label="Your Data is here"
+                  multiline
+                  rows={3}
                   fullWidth
                   variant="outlined"
-                  value={password}
-                  onChange={handlePasswordChange}
+                  value={formData.text}
+                  onChange={(e) => handleInputChange("text", e.target.value)}
+                  InputProps={{ style: { color: 'white' } }} 
+                   InputLabelProps={{
+                
+                style: { color: 'grey', fontSize: 14 } // Changing label color
+                }}
                 />
-                <Button variant="contained" onClick={handleBack}>
-                  Back
-                </Button>
-                <Button variant="contained" onClick={handleSubmit}>
-                  Next
-                </Button>
+    
+                <Box className="step0-button">
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    disabled={activeStep === steps.length }
+                  >
+                    Save Data
+                  </Button>
+                </Box>
               </Box>
             );
-
-      case 4:
-        return (
-          <Box>
-            <DownloadComponent />
-            <Button variant="contained" onClick={handleSubmit}>
-              Submit
-            </Button>
-          </Box>
-        );
+    
 
       default:
         return "Unknown step";
     }
   };
 
-  const steps = [ "Choose Files", "Text Area","Algorithm","Password", "Download Files"];
+  const steps = [ "Choose Files","Algorithm","Password",  "Text Area"];
 
   return (
     <form onSubmit={handleSubmit}>

@@ -64,6 +64,11 @@ const VerticalStepper = () => {
               variant="outlined"
               value={formData.text}
               onChange={(e) => handleInputChange("text", e.target.value)}
+              InputProps={{ style: { color: 'white' } }} 
+              InputLabelProps={{
+                
+                style: { color: 'grey', fontSize: 14 } // Changing label color
+              }}
             />
 
             <Box className="step0-button">
@@ -115,7 +120,7 @@ const VerticalStepper = () => {
         );
           case 3:
             return (
-              <Box className="step3-password">
+              <Box className="step3-password step0-text-area">
                 <TextField
                   label="Enter Password"
                   type="password"
@@ -123,13 +128,22 @@ const VerticalStepper = () => {
                   variant="outlined"
                   value={password}
                   onChange={handlePasswordChange}
+                  InputProps={{ style: { color: 'white' } }} 
+                   InputLabelProps={{
+                
+                style: { color: 'grey', fontSize: 14 } // Changing label color
+                }}
+                  
                 />
-                <Button variant="contained" onClick={handleBack}>
-                  Back
-                </Button>
-                <Button variant="contained" onClick={handleSubmit}>
-                  Next
-                </Button>
+                 <Box className="step2-button">
+                <Button
+                variant="contained"
+                onClick={handleNext}
+                disabled={activeStep === steps.length -1}
+                >
+                Next
+              </Button>
+               </Box>
               </Box>
             );
 
@@ -137,9 +151,15 @@ const VerticalStepper = () => {
         return (
           <Box>
             <DownloadComponent />
-            <Button variant="contained" onClick={handleSubmit}>
-              Submit
-            </Button>
+            <Box className="step2-button">
+                <Button
+                variant="contained"
+                onClick={handleNext}
+                disabled={activeStep === steps.length }
+                >
+                Download
+              </Button>
+               </Box>
           </Box>
         );
 
