@@ -19,11 +19,7 @@ const About = () => {
        <li>Secure random password generation.</li> 
        <li>Asymmetric key pair generation.</li> 
        <li>Authenticated key exchange.</li> 
-        <li>Password strength estimation</li>
-
-
-
-
+       <li>Password strength estimation</li>
       </ul>
     </div>
   );

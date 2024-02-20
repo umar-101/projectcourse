@@ -43,10 +43,10 @@ const VerticalStepper = () => {
     try {
       const response = await axios.post('/submit-form/', formData); // Adjust URL as per your Django endpoint
       console.log(response.data.message);
-      // Handle success 
+      // Handle success (e.g., show success message to user)
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Handle error 
+      // Handle error (e.g., show error message to user)
     }
   };
 
@@ -131,7 +131,7 @@ const VerticalStepper = () => {
                 style: { color: 'grey', fontSize: 14 } // Changing label color
               }}
             />
-            <Box className="step1-button">
+            <Box className="step3-button">
               <Button
                 variant="contained"
                 onClick={handleNext}
