@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  MenuItem, InputAdornment, IconButton } from "@mui/material";
+import { MenuItem, InputAdornment, IconButton } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import axios from 'axios'; 
 import {
@@ -39,6 +39,11 @@ const VerticalStepper = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
+    // Update formData with the selected file
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      file: file,
+    }));
   };
 
   const handleAlgorithmChange = (event) => {
@@ -70,25 +75,33 @@ const VerticalStepper = () => {
       }));
     }
   };
+
   
-  
-  
-  const handleSubmit = async () => { // Remove the event parameter
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission
     try {
-      // Simulate successful response locally
-      console.log('Form Data:', formData);
-      console.log('Form submitted successfully');
-      // Handle success 
+      const response = await axios.post("YOUR_ENDPOINT_URL", formData);
+      console.log('Response:', response);
+      // Check for successful response status
+      if (response.status === 200) {
+        console.log('Form submitted successfully');
+        // Handle success 
+      } else {
+        console.error('Error submitting form:', response.statusText);
+        // Handle error 
+      }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error submitting form:', error.message);
       // Handle error 
     }
   };
   
-  const handleDownload = async () => {
+  
+  const handleDownload = async (event) => {
+    event.preventDefault(); // Prevent default form submission
     console.log("Download button clicked");
     try {
-      await handleSubmit(); // Call handleSubmit without passing event
+      await handleSubmit(event); // Pass the event to handleSubmit
       console.log("Form submitted successfully and files downloaded");
     } catch (error) {
       console.error('Error downloading files:', error);
@@ -227,19 +240,19 @@ const VerticalStepper = () => {
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-             <IconButton style={{ color: '#1976D2' }}>
-              <ArrowDropDownIcon />
-            </IconButton>
-          </InputAdornment>
-        ),
-      }}
-    >
-      {options.map((option) => (
-        <MenuItem key={option} value={option}>
-          {option}
-        </MenuItem>
-      ))}
-    </TextField>
+            <IconButton style={{ color: '#1976D2' }}>
+                <ArrowDropDownIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      >
+        {options.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
             <Box className="step2-button">
               <Button
                 variant="contained"
@@ -251,7 +264,7 @@ const VerticalStepper = () => {
             </Box>
           </Box>
         );
-  
+
       case 3:
         return (
           <Box className="step3-password step0-text-area">
@@ -272,14 +285,14 @@ const VerticalStepper = () => {
               <Button
                 variant="contained"
                 onClick={handleNext}
-                disabled={activeStep === steps.length -1}
+                disabled={activeStep === steps.length - 1}
               >
                 Next
               </Button>
             </Box>
           </Box>
         );
-  
+
       case 4:
         return (
           <Box>
@@ -295,12 +308,12 @@ const VerticalStepper = () => {
             </Box>
           </Box>
         );
-  
+
       default:
         return "Unknown step";
     }
   };
-  
+
   const steps = ["Text Area", "Choose Files", "Algorithm", "Password", "Download Files"];
 
   return (
