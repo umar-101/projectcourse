@@ -43,7 +43,19 @@
   text-align: left;
   color: white; /* Changing the actual input color */
 }
-
+.textField-custom {
+  & .MuiOutlinedInput-root {
+    fieldset {
+      border-color: gray; /* default border color */
+    }
+    &:hover fieldset {
+      border-color: darkgray; /* border color when hovered */
+    }
+    &.Mui-focused fieldset {
+      border-color: #1976D2; /* border color when focused */
+    }
+  }
+}
 .step0-text-area::placeholder {
   color: grey; /* Changing the hint text color */
 }
@@ -65,6 +77,7 @@
   justify-content: flex-end;
   margin-top: 16px;
 }
+
 
 /* Styles for Step 2 */
 .step2-dropdown {

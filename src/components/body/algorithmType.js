@@ -7,6 +7,7 @@ const DropdownTextField = () => {
 
   return (
     <TextField
+      className="textField-custom"
       select
       fullWidth
       label="Select an option"
@@ -31,7 +32,7 @@ const DropdownTextField = () => {
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton>
+             <IconButton style={{ color: '#1976D2' }}>
               <ArrowDropDownIcon />
             </IconButton>
           </InputAdornment>

@@ -29,6 +29,12 @@ const FileUploadComponent = () => {
           <Typography variant="subtitle1" sx={{ marginTop: "8px" ,color:'grey'}}>
             Drag & drop your file here
           </Typography>
+          {/* Display file name if selected */}
+          {selectedFile && (
+            <Typography variant="subtitle1" sx={{ marginTop: "8px", color:'grey' }}>
+              {selectedFile.name}
+            </Typography>
+          )}
         </Box>
         <Box sx={{ mt: "auto" }}>
           {/* Choose File Button */}

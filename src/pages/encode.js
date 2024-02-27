@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from 'axios'; // Import Axios for making HTTP requests
+import axios from 'axios'; 
 import {
   Stepper,
   Step,
@@ -22,7 +22,7 @@ const VerticalStepper = () => {
     text: "",
     file: null,
     algorithm: "",
-    password: "" // Include password in form data state
+    password: ""
   });
 
   const handleNext = () => {
@@ -34,22 +34,54 @@ const VerticalStepper = () => {
   };
 
   const handleInputChange = (name, value) => {
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    if (name === "file") {
+      // If the input is a file, update the formData with the file object and its name
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        file: value,
+        fileName: value ? value.name : null, // Add the file name to the formData
+      }));
+    } else if (name === "algorithm") {
+      // If the input is an algorithm, directly update the formData
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        algorithm: value,
+      }));
+    } else {
+      // For other inputs, directly update the formData
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
+  
+  
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  
+  const handleSubmit = async () => { // Remove the event parameter
     try {
-      const response = await axios.post('/submit-form/', formData); // Adjust URL as per your Django endpoint
-      console.log(response.data.message);
+      // Simulate successful response locally
+      console.log('Form Data:', formData);
+      console.log('Form submitted successfully');
       // Handle success 
     } catch (error) {
       console.error('Error submitting form:', error);
       // Handle error 
     }
   };
-
+  
+  const handleDownload = async () => {
+    console.log("Download button clicked");
+    try {
+      await handleSubmit(); // Call handleSubmit without passing event
+      console.log("Form submitted successfully and files downloaded");
+    } catch (error) {
+      console.error('Error downloading files:', error);
+    }
+  };
+  
+  
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -57,6 +89,7 @@ const VerticalStepper = () => {
           <Box className="step0-text-area">
             <TextField
               label="Enter Text"
+              className="textField-custom" 
               multiline
               rows={3}
               fullWidth
@@ -65,7 +98,7 @@ const VerticalStepper = () => {
               onChange={(e) => handleInputChange("text", e.target.value)}
               InputProps={{ style: { color: 'white' } }} 
               InputLabelProps={{
-                style: { color: 'grey', fontSize: 14 } // Changing label color
+                style: { color: 'grey', fontSize: 14 }
               }}
             />
             <Box className="step0-button">
@@ -120,6 +153,7 @@ const VerticalStepper = () => {
         return (
           <Box className="step3-password step0-text-area">
             <TextField
+              className="textField-custom"
               label="Enter Password"
               type="password"
               fullWidth
@@ -128,7 +162,7 @@ const VerticalStepper = () => {
               onChange={(e) => handleInputChange("password", e.target.value)}
               InputProps={{ style: { color: 'white' } }} 
               InputLabelProps={{
-                style: { color: 'grey', fontSize: 14 } // Changing label color
+                style: { color: 'grey', fontSize: 14 }
               }}
             />
             <Box className="step1-button">
@@ -150,8 +184,8 @@ const VerticalStepper = () => {
             <Box className="step4-button">
               <Button
                 variant="contained"
-                onClick={handleNext}
-                disabled={activeStep === steps.length }
+                onClick={handleDownload}
+                disabled={activeStep === steps.length}
               >
                 Download
               </Button>
@@ -172,6 +206,7 @@ const VerticalStepper = () => {
         <Typography variant="h6" className="stepper-title">
          Encode your message
         </Typography>
+        
         <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((label, index) => (
             <Step key={label}>
