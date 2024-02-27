@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import {  MenuItem, InputAdornment, IconButton } from "@mui/material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import axios from 'axios'; 
 import {
   Stepper,
@@ -8,14 +10,14 @@ import {
   Typography,
   Box,
   TextField,
+  Container
 } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-import FileUploadComponent from "../components/body/fileUpload";
-import DropdownTextField from "../components/body/algorithmType";
 import DownloadComponent from "../components/body/downloadFile";
 
 import "./steps.css";
-
+const options = ["Option 1", "Option 2", "Option 3"];
 const VerticalStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -31,6 +33,19 @@ const VerticalStepper = () => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handleAlgorithmChange = (event) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      algorithm: event.target.value // Update algorithm value in form data
+    }));
   };
 
   const handleInputChange = (name, value) => {
@@ -57,7 +72,6 @@ const VerticalStepper = () => {
   };
   
   
-
   
   const handleSubmit = async () => { // Remove the event parameter
     try {
@@ -116,9 +130,60 @@ const VerticalStepper = () => {
       case 1:
         return (
           <Box className="step1-file-upload">
-            <FileUploadComponent
-              onFileChange={(file) => handleInputChange("file", file)}
-            />
+           <Container width="600px" textAlign="left">
+      <Box
+        sx={{
+          border: "2px dashed #bdbdbd",
+          borderRadius: "12px",
+          padding: "16px",
+          textAlign: "center",
+        }}
+      >
+        <Box>
+          {/* File Icon */}
+          <CloudUploadIcon sx={{ fontSize: "40px", color: "#bdbdbd" }} />
+        </Box>
+        <Box>
+          {/* Typography Text */}
+          <Typography variant="subtitle1" sx={{ marginTop: "8px" ,color:'grey'}}>
+            Drag & drop your file here
+          </Typography>
+          {/* Display file name if selected */}
+          {selectedFile && (
+            <Typography variant="subtitle1" sx={{ marginTop: "8px", color:'grey' }}>
+              {selectedFile.name}
+            </Typography>
+          )}
+        </Box>
+        <Box sx={{ mt: "auto" }}>
+          {/* Choose File Button */}
+          <input
+            accept="image/*"
+            style={{ display: "none" }}
+            id="file-upload-button"
+            type="file"
+            onChange={handleFileChange}
+          />
+          <label htmlFor="file-upload-button">
+            <Button
+              variant="contained"
+              component="span"
+              sx={{
+                mt: "8px",
+                backgroundColor: "#4caf50",
+                backgroundColor: "#353535",
+                "&:hover": {
+                  backgroundColor: "#141414", // Set the background color on hover
+                },
+                color: "white",
+              }}
+            >
+              Choose File
+            </Button>
+          </label>
+        </Box>
+      </Box>
+    </Container>
             <Box className="step1-button">
               <Button
                 variant="contained"
@@ -134,9 +199,47 @@ const VerticalStepper = () => {
       case 2:
         return (
           <Box className="step2-dropdown">
-            <DropdownTextField
-              onSelect={(value) => handleInputChange("algorithm", value)}
-            />
+           <TextField
+      className="textField-custom"
+      select
+      fullWidth
+      label="Select an algorithm"
+      variant="outlined"
+      value={formData.algorithm} // Bind value to algorithm value in form data
+      onChange={handleAlgorithmChange} 
+      sx={{
+        "& .MuiInputBase-input": {
+          color: "#7B7A7A", // Set the text color
+        },
+        "& .MuiInputLabel-root": {
+          color: "#4E4E4E", // Set the hint color
+        },
+        "& .MuiInput-underline:before": {
+          borderBottomColor: "#7B7A7A", // Set the underline color
+        },
+        "& .MuiInput-underline:hover:before": {
+          borderBottomColor: "#1F1F1F", // Set the underline color on hover
+        },
+      }}
+      SelectProps={{
+        IconComponent: () => <React.Fragment />,
+      }}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+             <IconButton style={{ color: '#1976D2' }}>
+              <ArrowDropDownIcon />
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+    >
+      {options.map((option) => (
+        <MenuItem key={option} value={option}>
+          {option}
+        </MenuItem>
+      ))}
+    </TextField>
             <Box className="step2-button">
               <Button
                 variant="contained"
