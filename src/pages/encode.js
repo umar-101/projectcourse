@@ -317,7 +317,7 @@ const VerticalStepper = () => {
   const steps = ["Text Area", "Choose Files", "Algorithm", "Password", "Download Files"];
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form method="post" enctype="multipart/form-data" onSubmit={handleSubmit}>
       <Box className="vertical-stepper-container">
         <Typography variant="h6" className="stepper-title">
          Encode your message

@@ -301,7 +301,7 @@ case 2:
   const steps = [ "Choose Files","Algorithm","Password",  "Text Area"];
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form method="post" enctype="multipart/form-data" onSubmit={handleSubmit}>
       <Box className="vertical-stepper-container">
         <Typography variant="h6" className="stepper-title">
          Decode your message
