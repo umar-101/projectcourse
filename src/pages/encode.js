@@ -12,12 +12,13 @@ import {
   TextField,
   Container
 } from "@mui/material";
+
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-
 import DownloadComponent from "../components/body/downloadFile";
-
 import "./steps.css";
+
 const options = ["Option 1", "Option 2", "Option 3"];
+
 const VerticalStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -184,7 +185,6 @@ const VerticalStepper = () => {
               sx={{
                 mt: "8px",
                 backgroundColor: "#4caf50",
-                backgroundColor: "#353535",
                 "&:hover": {
                   backgroundColor: "#141414", // Set the background color on hover
                 },
