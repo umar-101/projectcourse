@@ -82,7 +82,14 @@ const VerticalStepper = () => {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     try {
-      const response = await axios.post("YOUR_ENDPOINT_URL", formData);
+      const formData = new FormData(); // Create FormData object
+      // Append form data to the FormData object
+      formData.append('text', formData.text);
+      formData.append('file', formData.file);
+      formData.append('algorithm', formData.algorithm);
+      formData.append('password', formData.password);
+  
+      const response = await axios.post("/decode", formData);
       console.log('Response:', response);
       // Check for successful response status
       if (response.status === 200) {
@@ -97,6 +104,7 @@ const VerticalStepper = () => {
       // Handle error 
     }
   };
+  
   
   
   const handleDownload = async (event) => {
@@ -301,7 +309,8 @@ case 2:
   const steps = [ "Choose Files","Algorithm","Password",  "Text Area"];
 
   return (
-    <form method="post" enctype="multipart/form-data" onSubmit={handleSubmit}>
+    <form method="post" enctype="multipart/form-data" 
+    onSubmit={handleSubmit}>
       <Box className="vertical-stepper-container">
         <Typography variant="h6" className="stepper-title">
          Decode your message
