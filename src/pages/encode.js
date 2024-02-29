@@ -76,33 +76,55 @@ const VerticalStepper = () => {
       }));
     }
   };
+const handleChange = (event) => {
+  const { name, value, files } = event.target;
+  if (name === "file") {
+    // Handle file input separately
+    const file = files[0];
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      file: file,
+      fileName: file ? file.name : null,
+    }));
+  } else {
+    // For other inputs, directly update the formData
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  }
+};
+  
+const handleSubmit = async (event) => {
+  event.preventDefault(); // Prevent default form submission
+  try {
+    const formDataToSend = new FormData(); // Create FormData object
 
-  
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
-    try {
-      const formData = new FormData(); // Create FormData object
-      // Append form data to the FormData object
-      formData.append('text', formData.text);
-      formData.append('file', formData.file);
-      formData.append('algorithm', formData.algorithm);
-      formData.append('password', formData.password);
-  
-      const response = await axios.post("/encode", formData); // No need to specify headers
-      console.log('Response:', response);
-      // Check for successful response status
-      if (response.status === 200) {
-        console.log('Form submitted successfully');
-        // Handle success 
-      } else {
-        console.error('Error submitting form:', response.statusText);
-        // Handle error 
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error.message);
+    // Append form data to the FormData object
+    formDataToSend.append('text', formData.text);
+    formDataToSend.append('file', formData.file);
+    formDataToSend.append('algorithm', formData.algorithm);
+    formDataToSend.append('password', formData.password);
+
+    console.log('FormData before submission:', formDataToSend); // Debugging
+
+    const response = await axios.post("/encode", formDataToSend);
+    console.log('Response:', response);
+    // Check for successful response status
+    if (response.status === 200) {
+      console.log('Form submitted successfully');
+      // Handle success 
+    } else {
+      console.error('Error submitting form:', response.statusText);
       // Handle error 
     }
-  };
+  } catch (error) {
+    console.error('Error submitting form:', error.message);
+    // Handle error 
+  }
+};
+
+
   
   
   

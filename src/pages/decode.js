@@ -82,14 +82,15 @@ const VerticalStepper = () => {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     try {
-      const formData = new FormData(); // Create FormData object
-      // Append form data to the FormData object
-      formData.append('text', formData.text);
-      formData.append('file', formData.file);
-      formData.append('algorithm', formData.algorithm);
-      formData.append('password', formData.password);
+      const formDataToSend = new FormData(); // Create FormData object
   
-      const response = await axios.post("/decode", formData);
+      // Append form data to the FormData object
+      formDataToSend.append('text', formData.text);
+      formDataToSend.append('file', formData.file);
+      formDataToSend.append('algorithm', formData.algorithm);
+      formDataToSend.append('password', formData.password);
+  
+      const response = await axios.post("/decode", formDataToSend);
       console.log('Response:', response);
       // Check for successful response status
       if (response.status === 200) {
@@ -104,6 +105,7 @@ const VerticalStepper = () => {
       // Handle error 
     }
   };
+  
   
   
   
@@ -316,7 +318,7 @@ case 2:
          Decode your message
         </Typography>
         {/* <Typography variant="body2" className="stepper-subtitle">
-          Simple, fast, secure client-side file encryption
+          Simple, fast, secure client-side file encryptiona
         </Typography> */}
         <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((label, index) => (
